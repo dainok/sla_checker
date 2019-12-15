@@ -3,7 +3,7 @@ import sla_checker
 
 
 def test_solved_within_the_working_day():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
@@ -18,7 +18,7 @@ def test_solved_within_the_working_day():
 
 
 def test_failed_within_the_working_day():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
@@ -33,7 +33,7 @@ def test_failed_within_the_working_day():
 
 
 def test_solved_between_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 17, 0, 0),
@@ -48,7 +48,7 @@ def test_solved_between_working_days():
 
 
 def test_failed_between_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 17, 0, 0),
@@ -63,7 +63,7 @@ def test_failed_between_working_days():
 
 
 def test_solved_before_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 1, 0, 0),
@@ -78,7 +78,7 @@ def test_solved_before_working_days():
 
 
 def test_failed_before_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 1, 0, 0),
@@ -93,7 +93,7 @@ def test_failed_before_working_days():
 
 
 def test_solved_after_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 21, 0, 0),
@@ -108,7 +108,7 @@ def test_solved_after_working_days():
 
 
 def test_failed_after_working_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 21, 0, 0),
@@ -123,7 +123,7 @@ def test_failed_after_working_days():
 
 
 def test_solved_across_holidays():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2020, 12, 24, 17, 0, 0),
@@ -138,7 +138,7 @@ def test_solved_across_holidays():
 
 
 def test_failed_across_holidays():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2020, 12, 24, 17, 0, 0),

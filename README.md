@@ -24,7 +24,7 @@ Input parameters:
 Example (7x24 service with 2 hours SLA):
 
 ```
-sla = sla_checker.sla_checker()
+sla = sla_checker.SLAChecker()
 sla.check(
   event_start = datetime.datetime(2020, 12, 24, 17, 0, 0),
   event_end = datetime.datetime(2020, 12, 28, 10, 0, 1),
@@ -36,7 +36,7 @@ sla.check(
 Example (5x9 service with 2 hours SLA):
 
 ```
-sla = sla_checker.sla_checker()
+sla = sla_checker.SLAChecker()
 sla.check(
   event_start = datetime.datetime(2020, 12, 24, 17, 0, 0),
   event_end = datetime.datetime(2020, 12, 28, 10, 0, 1),
@@ -52,7 +52,7 @@ sla.check(
 Example (7x9 service with 2 hours SLA):
 
 ```
-sla = sla_checker.sla_checker()
+sla = sla_checker.SLAChecker()
 sla.check(
   event_start = datetime.datetime(2020, 12, 24, 17, 0, 0),
   event_end = datetime.datetime(2020, 12, 28, 10, 0, 1),

@@ -3,7 +3,7 @@ import sla_checker
 
 
 def test_solved_within_the_day():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
@@ -15,7 +15,7 @@ def test_solved_within_the_day():
 
 
 def test_failed_within_the_day():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
@@ -27,7 +27,7 @@ def test_failed_within_the_day():
 
 
 def test_solved_between_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 22, 0, 0),
@@ -39,7 +39,7 @@ def test_solved_between_days():
 
 
 def test_failed_between_days():
-    sla = sla_checker.sla_checker()
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 22, 0, 0),

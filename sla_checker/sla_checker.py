@@ -2,7 +2,7 @@ import datetime
 import holidays
 
 
-class sla_checker(object):
+class SLAChecker(object):
     def __init__(self):
         pass
 
