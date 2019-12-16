@@ -5,19 +5,20 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="sla_checker",  # Replace with your own username
-    version="0.0.1",
+    name="sla_checker",
+    version="0.0.2",
     author="Andrea Dainese",
     author_email="andrea.dainese@gmail.com",
-    description="A simple package to check SLA",
+    license="GPL-3.0-or-later",
+    description="A python module that will check if two events are within a defined SLA.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/dainok/sla_checker",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries :: Python Modules"
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.6",
 )
