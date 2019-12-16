@@ -8,8 +8,8 @@ class SLAChecker(object):
 
     def check(
         self,
-        event_start: datetime.datetime,
-        event_end: datetime.datetime,
+        event_start,
+        event_end,
         minutes_to_resolve: int,
         country_code: str = None,
         opening_hours: str = None,
@@ -18,6 +18,11 @@ class SLAChecker(object):
         working_on_holidays: bool = False,
     ) -> bool:
         # Checking start and end time
+        if not isinstance(event_start, datetime.datetime):
+            raise Exception("event_start must be a datetime.datetime object")
+        if not isinstance(event_end, datetime.datetime):
+            raise Exception("event_end must be a datetime.datetime object")
+
         if (event_end - event_start).total_seconds() <= 0:
             raise Exception("event_end must follow event_start")
 
