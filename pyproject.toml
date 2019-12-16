@@ -5,15 +5,16 @@ description = "A python module that will check if two events are within a define
 authors = [
   "Andrea Dainese <andrea.dainese@gmail.com>"
 ]
-license = "GPLv3"
+license = "GPL-3.0-or-later"
 readme = "README.md"
-python = "^3.7"
+python = "^3.6"
 homepage = "https://github.com/dainok/sla_checker"
 repository = "https://github.com/dainok/sla_checker"
 documentation = "https://github.com/dainok/sla_checker"
 keywords = ["sla"]
 classifiers = [
-  "Topic :: Software Development"
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
 # Requirements
@@ -21,8 +22,7 @@ classifiers = [
 holidays = "^0.9.11"
 
 [dev-dependencies]
-pre-commit = { version = "^1.20.0", python = "^3.7" }
-black = { version = "^19.3", python = "^3.7" }
+black = { version = "^19.3", python = "^3.6" }
 
 [scripts]
 poetry = "infer_pyproject.cli:main"
