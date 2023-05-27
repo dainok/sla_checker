@@ -1,8 +1,15 @@
+"""Testing legacy API with a 9x5 SLA."""
+__author__ = "Andrea Dainese"
+__contact__ = "andrea@adainese.it"
+__copyright__ = "Copyright 2022, Andrea Dainese"
+__license__ = "GPLv3"
+
 import datetime
 import sla_checker
 
 
 def test_solved_within_the_working_day():
+    """Ticket is solved within the day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -20,6 +27,7 @@ def test_solved_within_the_working_day():
 
 
 def test_failed_within_the_working_day():
+    """SLA exceeded within the day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -37,6 +45,7 @@ def test_failed_within_the_working_day():
 
 
 def test_solved_between_working_days():
+    """Ticket is solved across days."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -54,6 +63,7 @@ def test_solved_between_working_days():
 
 
 def test_failed_between_working_days():
+    """SLA exceeded across days."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -71,6 +81,7 @@ def test_failed_between_working_days():
 
 
 def test_solved_before_working_days():
+    """Ticket opened before opening hour is solved within the day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -88,6 +99,7 @@ def test_solved_before_working_days():
 
 
 def test_failed_before_working_days():
+    """SLA exceeded within the day when ticket is opened before opening hours."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -105,6 +117,7 @@ def test_failed_before_working_days():
 
 
 def test_solved_after_working_days():
+    """Ticket opened after closing hour is solved within the next working day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -122,6 +135,7 @@ def test_solved_after_working_days():
 
 
 def test_failed_after_working_days():
+    """SLA exceeded within the next working day when ticket is opened after closing hours."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -139,6 +153,7 @@ def test_failed_after_working_days():
 
 
 def test_solved_across_holidays():
+    """Ticket opened before holidays is solved within the next working day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -156,6 +171,7 @@ def test_solved_across_holidays():
 
 
 def test_failed_across_holidays():
+    """SLA exceeded within the next working day when ticket is opened before holidays."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(

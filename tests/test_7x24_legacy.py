@@ -1,8 +1,15 @@
+"""Testing legacy API with a 24x7 SLA."""
+__author__ = "Andrea Dainese"
+__contact__ = "andrea@adainese.it"
+__copyright__ = "Copyright 2022, Andrea Dainese"
+__license__ = "GPLv3"
+
 import datetime
 import sla_checker
 
 
 def test_solved_within_the_day():
+    """Ticket is solved within the day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -15,6 +22,7 @@ def test_solved_within_the_day():
 
 
 def test_failed_within_the_day():
+    """SLA exceeded within the day."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -27,6 +35,7 @@ def test_failed_within_the_day():
 
 
 def test_solved_between_days():
+    """Ticket is solved across days."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(
@@ -39,6 +48,7 @@ def test_solved_between_days():
 
 
 def test_failed_between_days():
+    """SLA exceeded across days."""
     sla = sla_checker.SLAChecker()
     assert (
         sla.check(

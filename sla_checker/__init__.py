@@ -4,4 +4,4 @@ __contact__ = "andrea@adainese.it"
 __copyright__ = "Copyright 2019, Andrea Dainese"
 __license__ = "GPLv3"
 
-from .sla_checker import SLAChecker
+from .sla_checker import SLAChecker  # noqa: F401

@@ -1,8 +1,17 @@
-import datetime
-import holidays
-import logging
+"""sla_checker main class."""
+__author__ = "Andrea Dainese"
+__contact__ = "andrea@adainese.it"
+__copyright__ = "Copyright 2022, Andrea Dainese"
+__license__ = "GPLv3"
 
-class SLAChecker(object):
+import datetime
+import logging
+import holidays
+
+
+class SLAChecker:
+    """SLAChecker main class."""
+
     country_holidays = None  # Don't include Sundays
     opening_hours = None
     closing_hours = None
@@ -40,17 +49,21 @@ class SLAChecker(object):
         if country_code:
             try:
                 self.country_holidays = holidays.CountryHoliday(country_code)
-            except NotImplemented:
-                raise ValueError("country_code is not supported.")
-        
-        if (opening_hours and not closing_hours) or (not opening_hours and closing_hours):
-            raise ValueError("opening_housrs and closing_hours must be both set or both unset.")
+            except NotImplementedError as exc:
+                raise ValueError("country_code is not supported.") from exc
+
+        if (opening_hours and not closing_hours) or (
+            not opening_hours and closing_hours
+        ):
+            raise ValueError(
+                "opening_housrs and closing_hours must be both set or both unset."
+            )
 
         if closing_hours and closing_hours <= opening_hours:
             raise ValueError(
                 "if set, closing_hours must be greater than opening_hours."
             )
-  
+
         if not working_on_holidays and not country_code:
             raise ValueError(
                 "if working_on_holidays is False country_code is mandatory."
@@ -62,13 +75,11 @@ class SLAChecker(object):
         self.working_on_holidays = working_on_holidays
         if opening_hours:
             self.full_day_service = False
-        
 
     def check(self, *args, **kwargs) -> bool:
         """
         Transision function to make compatible the legacy syntax.
 
-        
         Current syntax:
 
         * event_start: datetime.datetime
@@ -86,13 +97,18 @@ class SLAChecker(object):
         * working_on_sat: bool = False
         * working_on_holidays: bool = False
         """
-        if kwargs.get("working_on_holidays") or kwargs.get("working_on_sat") or kwargs.get("closing_hours") or kwargs.get("opening_hours") or kwargs.get("country_code"):
+        if (
+            kwargs.get("working_on_holidays")
+            or kwargs.get("working_on_sat")
+            or kwargs.get("closing_hours")
+            or kwargs.get("opening_hours")
+            or kwargs.get("country_code")
+        ):
             # Legacy syntax
             return self.check_v1(*args, **kwargs)
-    
+
         # Current syntax
         return self.check_v2(*args, **kwargs)
-
 
     def check_v2(
         self,
@@ -116,7 +132,9 @@ class SLAChecker(object):
         current_datetime = event_start
 
         while remaining_seconds >= 0:
-            current_weekday = current_datetime.weekday()  # Current day of the week (0 is Monday)
+            current_weekday = (
+                current_datetime.weekday()
+            )  # Current day of the week (0 is Monday)
             if self.full_day_service:
                 # Full day service (opening at 00:00, closing at 24:00)
                 current_opening_hours = datetime.datetime(
@@ -129,7 +147,7 @@ class SLAChecker(object):
                 current_closing_hours = datetime.datetime(
                     current_datetime.year,
                     current_datetime.month,
-                    current_datetime.day +1,
+                    current_datetime.day + 1,
                     0,
                     0,
                 )
@@ -149,13 +167,22 @@ class SLAChecker(object):
                     self.closing_hours.minute,
                 )
 
-
             if (
                 (self.working_on_holidays and self.working_on_sat)
-                or(self.working_on_holidays and current_datetime in self.country_holidays)
+                or (
+                    self.working_on_holidays
+                    and current_datetime in self.country_holidays
+                )
                 or (self.working_on_holidays and current_weekday == 6)
-                or (self.working_on_sat and current_datetime not in self.country_holidays and current_weekday == 5)
-                or (current_datetime not in self.country_holidays and current_weekday < 5)
+                or (
+                    self.working_on_sat
+                    and current_datetime not in self.country_holidays
+                    and current_weekday == 5
+                )
+                or (
+                    current_datetime not in self.country_holidays
+                    and current_weekday < 5
+                )
             ):
                 # Working day
                 if current_datetime < current_opening_hours:
@@ -165,22 +192,33 @@ class SLAChecker(object):
                 elif current_datetime > current_closing_hours:
                     print("AFTER")
                     # After closing hours (shift to next day at opening hours)
-                    current_datetime = current_opening_hours + datetime.timedelta(days=1)
+                    current_datetime = current_opening_hours + datetime.timedelta(
+                        days=1
+                    )
                 else:
                     print("WITHIN")
                     # Within opening hours
                     if event_end.date() == current_datetime.date():
                         print("ENDS TODAY")
                         # Event ends within the current day
-                        remaining_seconds = remaining_seconds - (event_end - current_datetime).total_seconds()
+                        remaining_seconds = (
+                            remaining_seconds
+                            - (event_end - current_datetime).total_seconds()
+                        )
                         if remaining_seconds >= 0:
                             # Event is within the SLA
                             return True
                     else:
                         print("DONT END TODAY")
-                        # Event doesn't end within the current day (update remaining_seconds and current_datetime)
-                        remaining_seconds = remaining_seconds - (current_closing_hours-current_datetime).total_seconds()
-                        current_datetime = current_opening_hours + datetime.timedelta(days=1)
+                        # Event doesn't end within the current day (update remaining_seconds and
+                        # current_datetime)
+                        remaining_seconds = (
+                            remaining_seconds
+                            - (current_closing_hours - current_datetime).total_seconds()
+                        )
+                        current_datetime = current_opening_hours + datetime.timedelta(
+                            days=1
+                        )
                         print(remaining_seconds)
                         print(current_datetime)
             else:
@@ -206,9 +244,11 @@ class SLAChecker(object):
         if country_code:
             try:
                 self.country_holidays = holidays.country_holidays(country_code)
-            except NotImplemented:
-                raise ValueError("country_code is not supported")
-        self.country_code = country_code
+            except NotImplementedError as exc:
+                raise ValueError("country_code is not supported") from exc
+        self.country_code = (
+            country_code  # pylint: disable=attribute-defined-outside-init
+        )
 
         if (opening_hours and not closing_hours) or (
             closing_hours and not opening_hours
@@ -223,14 +263,18 @@ class SLAChecker(object):
                 opening_hour = int(opening_hours.split(":")[0])
                 opening_minute = int(opening_hours.split(":")[1])
                 self.opening_hours = datetime.time(opening_hour, opening_minute)
-            except ValueError:
-                raise ValueError('opening_hours must be in the format of "HH:MM"')
+            except ValueError as exc:
+                raise ValueError(
+                    'opening_hours must be in the format of "HH:MM"'
+                ) from exc
             try:
                 closing_hour = int(closing_hours.split(":")[0])
                 closing_minute = int(closing_hours.split(":")[1])
                 self.closing_hours = datetime.time(closing_hour, closing_minute)
-            except ValueError:
-                raise ValueError('closing_hours must be in the format of "HH:MM"')
+            except ValueError as exc:
+                raise ValueError(
+                    'closing_hours must be in the format of "HH:MM"'
+                ) from exc
 
         self.working_on_sat = working_on_sat
         self.working_on_holidays = working_on_holidays

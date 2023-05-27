@@ -1,7 +1,0 @@
-setuptools
-black
-flake8
-pylama
-bandit
-pytest
-coverage
