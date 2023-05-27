@@ -23,7 +23,7 @@ repos:
     rev: 1.7.5
     hooks:
       - id: bandit
-        exclude: \.raw|migrations
+        exclude: \.raw|migrations|tests
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
@@ -34,8 +34,3 @@ repos:
     hooks:
       - id: pydocstyle
         exclude: \.raw|migrations
-  - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.19.17
-    hooks:
-      - id: djlint-django
-        files: "netdoc/templates"

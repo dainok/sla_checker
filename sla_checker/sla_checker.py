@@ -246,8 +246,8 @@ class SLAChecker:
                 self.country_holidays = holidays.country_holidays(country_code)
             except NotImplementedError as exc:
                 raise ValueError("country_code is not supported") from exc
-        self.country_code = (
-            country_code  # pylint: disable=attribute-defined-outside-init
+        self.country_code = (  # pylint: disable=attribute-defined-outside-init
+            country_code
         )
 
         if (opening_hours and not closing_hours) or (
