@@ -12,6 +12,8 @@ def test_solved_within_the_working_day():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -27,6 +29,8 @@ def test_failed_within_the_working_day():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -42,6 +46,8 @@ def test_solved_between_working_days():
             minutes_to_resolve=180,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -57,6 +63,8 @@ def test_failed_between_working_days():
             minutes_to_resolve=180,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -72,6 +80,8 @@ def test_solved_before_working_days():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -87,6 +97,8 @@ def test_failed_before_working_days():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -102,6 +114,8 @@ def test_solved_after_working_days():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -117,6 +131,8 @@ def test_failed_after_working_days():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -132,6 +148,8 @@ def test_solved_across_holidays():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -147,6 +165,8 @@ def test_failed_across_holidays():
             minutes_to_resolve=120,
             opening_hours="09:00",
             closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
