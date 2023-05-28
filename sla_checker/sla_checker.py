@@ -44,7 +44,7 @@ class SLAChecker:
         * working_on_holidays: define if Sunday and Holidays are working days.
           Optional, default is True. If False country_code is mandatory.
 
-        To define a 24x7 service, set working_on_sat = True and working_on_holidays = True only.
+        To define a 24x7 service, create a sla_checker object without parameters.
         """
         if country_code:
             try:

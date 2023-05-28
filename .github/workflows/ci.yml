@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: "Setup Python3"
         uses: actions/setup-python@v3
-      - name: "Check out NetDoc repository code"
+      - name: "Check out repository code"
         uses: actions/checkout@v3
         with:
           fetch-depth: "0"
@@ -32,14 +32,14 @@ jobs:
     steps:
       - name: "Setup Python3"
         uses: actions/setup-python@v3
-      - name: "Check out sla_checker repository code"
+      - name: "Check out repository code"
         uses: actions/checkout@v3
         with:
           fetch-depth: "0"
-      - name: "Installing sla_checker"
+      - name: "Installing from repository"
         run: "pip install -e ."
       - name: "Install PyLint"
-        run: "netbox/venv/bin/pip install pylint"
+        run: "pip install pylint"
       - name: "Run Pylint"
         run: "pylint --rcfile=.pylintrc"
       - name: "Run PyTest"
