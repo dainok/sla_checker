@@ -48,7 +48,7 @@ class SLAChecker:
         """
         if country_code:
             try:
-                self.country_holidays = holidays.CountryHoliday(country_code)
+                self.country_holidays = holidays.country_holidays(country_code)
             except NotImplementedError as exc:
                 raise ValueError("country_code is not supported.") from exc
 

@@ -1,0 +1,46 @@
+---
+name: "CI"
+concurrency:
+  # Cancel any existing runs of this workflow for this same PR
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Setup Python3"
+        uses: actions/setup-python@v3
+      - name: "Check out NetDoc repository code"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
+      - name: "Install and run pre-commit"
+        uses: pre-commit/action@v3.0.0
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+    steps:
+      - name: "Setup Python3"
+        uses: actions/setup-python@v3
+      - name: "Check out sla_checker repository code"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
+      - name: "Installing sla_checker"
+        run: "pip install -e ."
+      - name: "Install PyLint"
+        run: "netbox/venv/bin/pip install pylint"
+      - name: "Run Pylint"
+        run: "pylint --rcfile=.pylintrc"
+      - name: "Run PyTest"
+        run: "pytest"
