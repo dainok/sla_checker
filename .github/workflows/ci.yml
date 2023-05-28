@@ -41,6 +41,6 @@ jobs:
       - name: "Install PyLint"
         run: "pip install pylint"
       - name: "Run Pylint"
-        run: "pylint --rcfile=.pylintrc"
+        run: "pylint --rcfile=.pylintrc sla_checker"
       - name: "Run PyTest"
         run: "pytest"
