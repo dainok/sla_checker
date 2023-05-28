@@ -10,18 +10,17 @@ import sla_checker
 
 def test_solved_within_the_working_day():
     """Ticket is solved within the day."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 17, 0, 0),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -29,18 +28,17 @@ def test_solved_within_the_working_day():
 
 def test_failed_within_the_working_day():
     """SLA exceeded within the day."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 13, 15, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 17, 0, 1),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -48,18 +46,17 @@ def test_failed_within_the_working_day():
 
 def test_solved_between_working_days():
     """Ticket is solved across days."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 17, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 11, 0, 0),
+            country_code="IT",
             minutes_to_resolve=180,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -67,18 +64,17 @@ def test_solved_between_working_days():
 
 def test_failed_between_working_days():
     """SLA exceeded across days."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 17, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 11, 0, 1),
+            country_code="IT",
             minutes_to_resolve=180,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -86,18 +82,17 @@ def test_failed_between_working_days():
 
 def test_solved_before_working_days():
     """Ticket opened before opening hour is solved within the day."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 1, 0, 0),
             event_end=datetime.datetime(2019, 12, 12, 11, 0, 0),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -105,18 +100,17 @@ def test_solved_before_working_days():
 
 def test_failed_before_working_days():
     """SLA exceeded within the day when ticket is opened before opening hours."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 1, 0, 0),
             event_end=datetime.datetime(2019, 12, 12, 11, 0, 1),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -124,18 +118,17 @@ def test_failed_before_working_days():
 
 def test_solved_after_working_days():
     """Ticket opened after closing hour is solved within the next working day."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 21, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 11, 0, 0),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -143,18 +136,17 @@ def test_solved_after_working_days():
 
 def test_failed_after_working_days():
     """SLA exceeded within the next working day when ticket is opened after closing hours."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2019, 12, 12, 21, 0, 0),
             event_end=datetime.datetime(2019, 12, 13, 11, 0, 1),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
@@ -162,18 +154,17 @@ def test_failed_after_working_days():
 
 def test_solved_across_holidays():
     """Ticket opened before holidays is solved within the next working day."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2020, 12, 24, 17, 0, 0),
             event_end=datetime.datetime(2020, 12, 28, 10, 0, 0),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is True
     )
@@ -181,18 +172,17 @@ def test_solved_across_holidays():
 
 def test_failed_across_holidays():
     """SLA exceeded within the next working day when ticket is opened before holidays."""
-    sla = sla_checker.SLAChecker(
-        country_code="IT",
-        opening_hours=datetime.time(9, 0),
-        closing_hours=datetime.time(18, 0),
-        working_on_sat=False,
-        working_on_holidays=False,
-    )
+    sla = sla_checker.SLAChecker()
     assert (
         sla.check(
             event_start=datetime.datetime(2020, 12, 24, 17, 0, 0),
             event_end=datetime.datetime(2020, 12, 28, 10, 0, 1),
+            country_code="IT",
             minutes_to_resolve=120,
+            opening_hours="09:00",
+            closing_hours="18:00",
+            working_on_sat=False,
+            working_on_holidays=False,
         )
         is False
     )
